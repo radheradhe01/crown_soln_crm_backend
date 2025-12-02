@@ -2,26 +2,15 @@ name: Build and Push Backend Image
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: Image tag (e.g., 0.0.3)
-        required: true
-        default: "0.0.3"
   push:
     branches: [ "main" ]
-    paths:
-      - "Dockerfile"
-      - "requirements.txt"
-      - "app/**"
-      - "**/*.py"
-
-permissions:
-  contents: read
-  packages: write
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout
@@ -47,7 +36,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/radheradhe01/crown_soln_crm_backend:${{ github.event.inputs.version || '0.0.3' }}
+            ghcr.io/radheradhe01/crown_soln_crm_backend:0.0.3
             ghcr.io/radheradhe01/crown_soln_crm_backend:latest
-          cache-from: type=registry,ref=ghcr.io/radheradhe01/crown_soln_crm_backend:buildcache
-          cache-to: type=registry,ref=ghcr.io/radheradhe01/crown_soln_crm_backend:buildcache,mode=max
