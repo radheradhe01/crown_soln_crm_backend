@@ -19,6 +19,15 @@ class Settings(BaseSettings):
     # CORS
     CORS_ORIGINS: List[str] = []
 
+    @field_validator("DATABASE_URL", mode="before")
+    def ensure_asyncpg(cls, v: Union[str, List[str]]):
+        if isinstance(v, str):
+            if v.startswith("postgresql://") and "+asyncpg" not in v:
+                return v.replace("postgresql://", "postgresql+asyncpg://")
+            if v.startswith("postgres://") and "+asyncpg" not in v:
+                return v.replace("postgres://", "postgresql+asyncpg://")
+        return v
+
     @field_validator("CORS_ORIGINS", mode="before")
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
         if isinstance(v, str) and not v.startswith("["):
