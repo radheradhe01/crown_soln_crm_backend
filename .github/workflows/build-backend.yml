@@ -41,7 +41,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/crm-backend:${{ github.event.inputs.version || '0.0.3' }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/crm-backend:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/crm-backend:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/crm-backend:buildcache,mode=max
+            bhaveshvarma1/crm_backend_cs:${{ github.event.inputs.version || '0.0.3' }}
+            bhaveshvarma1/crm_backend_cs:latest
+          cache-from: type=registry,ref=bhaveshvarma1/crm_backend_cs:buildcache
+          cache-to: type=registry,ref=bhaveshvarma1/crm_backend_cs:buildcache,mode=max
